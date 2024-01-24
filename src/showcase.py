@@ -8,7 +8,7 @@ class MayaOperations:
     @staticmethod
     def circleAroundMesh(*args):
         '''
-        Long  (didn't clean it :]) method to do the following:
+        Long ass(didn't clean it :]) method to do the following:
         - Create a camera and chnge the view to the camera created
         - Rotate the camera around the mesh at steps of 45 degrees
         - Create 2 frames for each angle and 2 frames for each reference image
@@ -97,29 +97,29 @@ class MayaOperations:
             cmds.setAttr(obj + '.visibility', 1)
             if cmds.objectType(obj) == 'imagePlane':
                 cmds.setKeyframe(obj, attribute='visibility', value=1, time=frame) 
+                
+    # scriptJobId = None
 
-    @staticmethod
-    def createDisplayModeScriptJob():
-        '''
-        Toggles the display mode on every frame change ON.
-        Subscribes the changeDisplayModeOnFrameChange function to the timeChanged event.
-        Somehow doesn't work when animation is playing, but works when scrubbing the timeline.
-        so ig it's fine? 
-        '''
-        if MayaOperations.scriptJobId is None: # subscribing the cjangeDisplayModeOnFrameChange function to the timeChanged event
-            MayaOperations.scriptJobId = cmds.scriptJob(event=["timeChanged", MayaOperations.changeDisplayModeOnFrameChange], killWithScene=False) 
-            
-    scriptJobId = None
-
-    @staticmethod
-    def killDisplayModeScriptJob():
-        '''
-        Toggles the display mode on every frame change OFF.
-        Kills the script job responsible for the toggling.
-        '''
-        if MayaOperations.scriptJobId is not None:
-            cmds.scriptJob(kill=MayaOperations.scriptJobId, force=True)
-            MayaOperations.scriptJobId = None
+    # @staticmethod
+    # def createDisplayModeScriptJob():
+    #     '''
+    #     Toggles the display mode on every frame change ON.
+    #     Subscribes the changeDisplayModeOnFrameChange function to the timeChanged event.
+    #     Somehow doesn't work when animation is playing, but works when scrubbing the timeline.
+    #     so ig it's fine? 
+    #     '''
+    #     if MayaOperations.scriptJobId is None: # subscribing the cjangeDisplayModeOnFrameChange function to the timeChanged event
+    #         MayaOperations.scriptJobId = cmds.scriptJob(event=["timeChanged", MayaOperations.changeDisplayModeOnFrameChange], killWithScene=False) 
+           
+    # @staticmethod
+    # def killDisplayModeScriptJob():
+    #     '''
+    #     Toggles the display mode on every frame change OFF.
+    #     Kills the script job responsible for the toggling.
+    #     '''
+    #     if MayaOperations.scriptJobId is not None:
+    #         cmds.scriptJob(kill=MayaOperations.scriptJobId, force=True)
+    #         MayaOperations.scriptJobId = None
 
     @staticmethod
     def changeDisplayModeOnFrameChange():
@@ -157,7 +157,7 @@ class ShowcaseToolUI:
         if cmds.window('ShowcaseToolUI', exists=True):
             cmds.deleteUI('ShowcaseToolUI')
 
-        window = cmds.window('ShowcaseToolUI', title='Model Showcase', widthHeight=(400,300), sizeable=False)
+        window = cmds.window('ShowcaseToolUI', title='Model Showcase', widthHeight=(400,300), sizeable=True)
         self.form = cmds.formLayout()
 
         self.createComponents()
@@ -173,7 +173,7 @@ class ShowcaseToolUI:
         self.createReferenceSelection()
         self.createCameraSettingsSliders()
         self.createShowcaseButton()
-        self.createToggleDisplayModeButton()        
+        # self.createToggleDisplayModeButton()        
 
     def createModelSelection(self):
         '''
@@ -219,11 +219,11 @@ class ShowcaseToolUI:
         '''
         self.btnShowcase = cmds.button(label='Showcase', command= MayaOperations.circleAroundMesh, width=100)
 
-    def createToggleDisplayModeButton(self):
-        '''
-        Button for toggling the display mode.
-        '''
-        self.btnToggleDisplayMode = cmds.button(label='Toggle Display Mode: OFF', command=self.toggleDisplayModeScriptJob, width=150)
+    # def createToggleDisplayModeButton(self):
+    #     '''
+    #     Button for toggling the display mode.
+    #     '''
+    #     self.btnToggleDisplayMode = cmds.button(label='Toggle Display Mode: OFF', command=self.toggleDisplayModeScriptJob, width=150)
 
     def createFormLayout(self):
         '''
@@ -243,8 +243,8 @@ class ShowcaseToolUI:
             (self.imagePlaneMenu270, 'top', 95), (self.imagePlaneMenu270, 'left', 110),
             (self.sliderCameraDistance, 'top', 125),
             (self.sliderCameraPitch, 'top', 155),
-            (self.btnShowcase, 'bottom', 5), (self.btnShowcase, 'right', 5),
-            (self.btnToggleDisplayMode, 'bottom', 5), (self.btnToggleDisplayMode, 'left', 5)
+            (self.btnShowcase, 'bottom', 5), (self.btnShowcase, 'right', 5)# ,
+            # (self.btnToggleDisplayMode, 'bottom', 5), (self.btnToggleDisplayMode, 'left', 5)
         ])           
         
     def toggleRefImage(self, state, textLabel, dropdownMenu):
@@ -254,18 +254,19 @@ class ShowcaseToolUI:
         cmds.text(textLabel, edit=True, enable=state)
         cmds.optionMenu(dropdownMenu, edit=True, enable=state)
 
-    def toggleDisplayModeScriptJob(self, *args):
-        if MayaOperations.scriptJobId is None:
-            MayaOperations.createDisplayModeScriptJob()
-            cmds.button(self.btnToggleDisplayMode, edit=True, label='Toggle Display Mode: ON')
-        else:
-            MayaOperations.killDisplayModeScriptJob()
-            cmds.button(self.btnToggleDisplayMode, edit=True, label='Toggle Display Mode: OFF') 
+    # def toggleDisplayModeScriptJob(self, *args):
+    #     if MayaOperations.scriptJobId is None:
+    #         MayaOperations.createDisplayModeScriptJob()
+    #         cmds.button(self.btnToggleDisplayMode, edit=True, label='Toggle Display Mode: ON')
+    #     else:
+    #         MayaOperations.killDisplayModeScriptJob()
+    #         cmds.button(self.btnToggleDisplayMode, edit=True, label='Toggle Display Mode: OFF') 
 
 def main():
     '''
     Run everything.
     '''
     ui = ShowcaseToolUI()
+    cmds.scriptJob(event=["timeChanged", MayaOperations.changeDisplayModeOnFrameChange], killWithScene=False) # subscribing the cjangeDisplayModeOnFrameChange function to the timeChanged event
                                                
 main()
