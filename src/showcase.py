@@ -109,7 +109,7 @@ class MayaOperations:
     #     so ig it's fine? 
     #     '''
     #     if MayaOperations.scriptJobId is None: # subscribing the cjangeDisplayModeOnFrameChange function to the timeChanged event
-    #         MayaOperations.scriptJobId = cmds.scriptJob(event=["timeChanged", MayaOperations.changeDisplayModeOnFrameChange], killWithScene=False) 
+    #         MayaOperations.scriptJobId = cmds.scriptJob(event=['timeChanged', MayaOperations.changeDisplayModeOnFrameChange], killWithScene=False) 
            
     # @staticmethod
     # def killDisplayModeScriptJob():
@@ -267,6 +267,6 @@ def main():
     Run everything.
     '''
     ui = ShowcaseToolUI()
-    cmds.scriptJob(event=["timeChanged", MayaOperations.changeDisplayModeOnFrameChange], killWithScene=False) # subscribing the cjangeDisplayModeOnFrameChange function to the timeChanged event
+    cmds.scriptJob(event=['timeChanged', MayaOperations.changeDisplayModeOnFrameChange], killWithScene=False) # subscribing the cjangeDisplayModeOnFrameChange function to the timeChanged event
                                                
 main()
