@@ -28,7 +28,7 @@ https://github.com/aniketrajnish/Model-Showcase-Tool-Maya/assets/58925008/f14c9e
  | **Camera Distance** | Slider to adjust the camera's distance from the model.                 |
  | **Camera Pitch**    | Slider to adjust the camera's pitch angle around the model.            |
 
-* Choose your model and reference images (optional).
+* Choose your model (always choose the parent) and reference images (optional).
 * Adjust the camera distance and pitch (angle) according to your needs.
 * Click on Showcase.
 
