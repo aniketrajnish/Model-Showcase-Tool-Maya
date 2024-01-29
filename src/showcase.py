@@ -16,7 +16,7 @@ class MayaOperations:
         - Everything gets keyframed except the switch between wireframe and smoothShaded (sigh)
         '''
         selectedMesh = cmds.optionMenu('meshMenu', query=True, value=True)
-        selectedMesh = selectedMesh[:len(selectedMesh) - 5] # why do they add 'Shape' to the end :/
+        selectedMesh = selectedMesh.replace('Shape', '') # why do they add 'Shape' :/
         
         if not cmds.objExists(selectedMesh):
             cmds.warning('Selected object does not exist. Please select a valid mesh.')
